@@ -77,7 +77,7 @@ namespace TRX_Merger.Utilities
                                 new XAttribute("aborted", testRun.ResultSummary.Counters.Aborted),
                                 new XAttribute("completed", testRun.ResultSummary.Counters.Completed),
                                 new XAttribute("disconnected", testRun.ResultSummary.Counters.Disconnected),
-                                new XAttribute("executed", testRun.ResultSummary.Counters.Еxecuted),
+                                new XAttribute("executed", testRun.ResultSummary.Counters.Executed),
                                 new XAttribute("failed", testRun.ResultSummary.Counters.Failed),
                                 new XAttribute("inconclusive", testRun.ResultSummary.Counters.Inconclusive),
                                 new XAttribute("inProgress", testRun.ResultSummary.Counters.InProgress),
@@ -181,28 +181,45 @@ namespace TRX_Merger.Utilities
 
         private static Counters DeserializeCounters(XElement resultSummary)
         {
+            Counters currentCounter = new Counters();
+
             var cc = resultSummary.Descendants(ns + "Counters").FirstOrDefault();
             if (cc == null)
                 return null;
 
-            return new Counters
+            IEnumerable<XAttribute> counterAllAttributes = cc.Attributes();
+
+            #region Initialize dictionaty with Counter attributes and Counter object properties
+            IDictionary<string, object> attributeObjectProprties = new Dictionary<string, object>()
             {
-                Aborted = int.Parse(cc.GetAttributeValue("aborted")),
-                Completed = int.Parse(cc.GetAttributeValue("completed")),
-                Disconnected = int.Parse(cc.GetAttributeValue("disconnected")),
-                Еxecuted = int.Parse(cc.GetAttributeValue("executed")),
-                Failed = int.Parse(cc.GetAttributeValue("failed")),
-                Inconclusive = int.Parse(cc.GetAttributeValue("inconclusive")),
-                InProgress = int.Parse(cc.GetAttributeValue("inProgress")),
-                NotExecuted = int.Parse(cc.GetAttributeValue("notExecuted")),
-                NotRunnable = int.Parse(cc.GetAttributeValue("notRunnable")),
-                Passed = int.Parse(cc.GetAttributeValue("passed")),
-                PassedButRunAborted = int.Parse(cc.GetAttributeValue("passedButRunAborted")),
-                Pending = int.Parse(cc.GetAttributeValue("pending")),
-                Timeout = int.Parse(cc.GetAttributeValue("timeout")),
-                Total = int.Parse(cc.GetAttributeValue("total")),
-                Warning = int.Parse(cc.GetAttributeValue("warning")),
+                { "total",currentCounter.Total },
+                { "executed",currentCounter.Executed },
+                { "passed",currentCounter.Passed },
+                { "failed",currentCounter.Failed },
+                { "timeout",currentCounter.Timeout },
+                { "aborted",currentCounter.Aborted },
+                { "inconclusive",currentCounter.Inconclusive },
+                { "passedButRunAborted",currentCounter.PassedButRunAborted },
+                { "notRunnable",currentCounter.NotRunnable },
+                { "notExecuted",currentCounter.NotExecuted },
+                { "disconnected",currentCounter.Disconnected },
+                { "warning",currentCounter.Warning },
+                { "completed",currentCounter.Completed },
+                { "inProgress",currentCounter.InProgress },
+                { "pending",currentCounter.Pending },
             };
+            #endregion
+
+            foreach (var counterAttribute in counterAllAttributes)
+            {
+                string currentAttribute = counterAttribute.Name.LocalName;
+                if (cc.GetAttributeValue(currentAttribute) != null)
+                {
+                    attributeObjectProprties[currentAttribute] = int.Parse(cc.GetAttributeValue(currentAttribute));
+                }
+            }
+            currentCounter = attributeObjectProprties.ToObject<Counters>();
+            return currentCounter;
         }
 
         private static List<TestList> DeserializeTestLists(IEnumerable<XElement> testList)

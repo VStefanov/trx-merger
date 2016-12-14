@@ -88,7 +88,7 @@ namespace TRX_Merger
                 resultSummary.Counters.Aborted += tr.ResultSummary.Counters.Aborted;
                 resultSummary.Counters.Completed += tr.ResultSummary.Counters.Completed;
                 resultSummary.Counters.Disconnected += tr.ResultSummary.Counters.Disconnected;
-                resultSummary.Counters.Еxecuted += tr.ResultSummary.Counters.Еxecuted;
+                resultSummary.Counters.Executed += tr.ResultSummary.Counters.Executed;
                 resultSummary.Counters.Failed += tr.ResultSummary.Counters.Failed;
                 resultSummary.Counters.Inconclusive += tr.ResultSummary.Counters.Inconclusive;
                 resultSummary.Counters.InProgress += tr.ResultSummary.Counters.InProgress;

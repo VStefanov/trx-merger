@@ -9,7 +9,7 @@ namespace TRX_Merger.TrxModel
     public class Counters
     {
         public int Total { get; set; }
-        public int Еxecuted { get; set; }
+        public int Executed { get; set; }
         public int Passed { get; set; }
         public int Failed { get; set; }
         public int Timeout { get; set; }
