@@ -24,13 +24,13 @@ namespace TRX_Merger.Utilities
             return null;
         }
 
-        public static T ToObject<T>(this IDictionary<string, object> source)
+        public static T ToObject<T>(this IDictionary<string, int> source)
         where T : class, new()
         {
             T someObject = new T();
             Type someObjectType = someObject.GetType();
 
-            foreach (KeyValuePair<string, object> item in source)
+            foreach (KeyValuePair<string, int> item in source)
             {
                 var property = item.Key.First().ToString().ToUpper() + item.Key.Substring(1);
                 someObjectType.GetProperty(property).SetValue(someObject, item.Value, null);

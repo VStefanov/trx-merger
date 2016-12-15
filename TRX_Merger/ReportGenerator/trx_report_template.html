@@ -52,7 +52,7 @@
       var resultBasedPanel= "";
       var resultBasedDisplay= "";
 
-      if(@Model.Run.ResultSummary.Outcome.Equals("Completed", StringComparison.CurrentCultureIgnoreCase)){
+      if(@Model.Run.ResultSummary.Outcome.Equals("Completed", StringComparison.CurrentCultureIgnoreCase) || @Model.Run.ResultSummary.Outcome.Equals("Passed", StringComparison.CurrentCultureIgnoreCase)){
         resultBasedColor = "#73a839";
         resultBasedPanel = "panel panel-success";
         resultBasedDisplay = "none";

@@ -189,8 +189,8 @@ namespace TRX_Merger.Utilities
 
             IEnumerable<XAttribute> counterAllAttributes = cc.Attributes();
 
-            #region Initialize dictionaty with Counter attributes and Counter object properties
-            IDictionary<string, object> attributeObjectProprties = new Dictionary<string, object>()
+            #region Initialize dictionaty with Counter XML attributes and Counter object properties
+            IDictionary<string, int> attributeObjectProprties = new Dictionary<string, int>()
             {
                 { "total",currentCounter.Total },
                 { "executed",currentCounter.Executed },
@@ -206,7 +206,8 @@ namespace TRX_Merger.Utilities
                 { "warning",currentCounter.Warning },
                 { "completed",currentCounter.Completed },
                 { "inProgress",currentCounter.InProgress },
-                { "pending",currentCounter.Pending },
+                { "pending",currentCounter.Pending }
+               
             };
             #endregion
 
@@ -215,10 +216,14 @@ namespace TRX_Merger.Utilities
                 string currentAttribute = counterAttribute.Name.LocalName;
                 if (cc.GetAttributeValue(currentAttribute) != null)
                 {
-                    attributeObjectProprties[currentAttribute] = int.Parse(cc.GetAttributeValue(currentAttribute));
+                    if (attributeObjectProprties.ContainsKey(currentAttribute))
+                    {
+                        attributeObjectProprties[currentAttribute] = int.Parse(cc.GetAttributeValue(currentAttribute));
+                    }
                 }
             }
             currentCounter = attributeObjectProprties.ToObject<Counters>();
+
             return currentCounter;
         }
 

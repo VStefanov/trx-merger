@@ -23,5 +23,6 @@ namespace TRX_Merger.TrxModel
         public int Completed { get; set; }
         public int InProgress { get; set; }
         public int Pending { get; set; }
+        public int Error { get; set; }
     }
 }
